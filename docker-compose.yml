@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  rest_service:
+    build:
+      context: '.'
+      dockerfile: Dockerfile
+    image: kenesparta/tk_rest_service
+    container_name: rest_service
+    restart: "no"
+    ports:
+      - "8084:8084"
