@@ -1,4 +1,4 @@
-name: Accepting PR
+name: Creating a docker image
 
 on:
   push:
@@ -24,4 +24,5 @@ jobs:
           rm $DOCKER_FILENAME
       - name: docker build
         run: |
-          docker build -t ghrc.io/kenesparta/tk_rest_service:$RELEASE_VERSION .
+          docker build -t ghcr.io/kenesparta/tk_rest_service:$RELEASE_VERSION .
+          docker pull ghcr.io/kenesparta/tk_rest_service:$RELEASE_VERSION
