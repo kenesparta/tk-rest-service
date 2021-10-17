@@ -1,4 +1,4 @@
-package api
+package common
 
 import (
 	"github.com/golang/gddo/httputil/header"

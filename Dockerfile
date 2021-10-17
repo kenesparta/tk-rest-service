@@ -6,7 +6,7 @@ COPY ./src .
 
 RUN apk add gcc musl-dev && \
     go mod tidy && \
-    go get -d && \
+    go get -d -u && \
     go test ./... -cover && \
     go build .
 

@@ -4,6 +4,7 @@ package api
 import (
 	"encoding/json"
 	"errors"
+	"github.com/kenesparta/tkRestService/common"
 	"net/http"
 )
 
@@ -11,27 +12,27 @@ type MultiplyHandler struct {
 }
 
 func (mh *MultiplyHandler) Post(w http.ResponseWriter, r *http.Request) {
-	CommonHeaders(w)
-	ValidateHeaders(w, r)
+	common.CommonHeaders(w)
+	common.ValidateHeaders(w, r)
 	var (
-		multiply Multiply
+		multiply Factor
 		dec      = json.NewDecoder(r.Body)
 	)
 
 	dec.DisallowUnknownFields()
 	if err := dec.Decode(&multiply); err != nil {
-		HttpErrorResponse(w, http.StatusBadRequest, err)
+		common.HttpErrorResponse(w, http.StatusBadRequest, err)
 		return
 	}
 
 	if !multiply.AreValidNumbers() {
-		HttpErrorResponse(w, http.StatusBadRequest, errors.New("fields required"))
+		common.HttpErrorResponse(w, http.StatusBadRequest, errors.New("fields required"))
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(&MultiplyResponse{Result: multiply.Result()}); err != nil {
-		HttpErrorResponse(w, http.StatusInternalServerError, err)
+	if err := json.NewEncoder(w).Encode(&ProductResponse{Result: multiply.Product()}); err != nil {
+		common.HttpErrorResponse(w, http.StatusInternalServerError, err)
 		return
 	}
 }

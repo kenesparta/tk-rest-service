@@ -1,4 +1,4 @@
-package api
+package common
 
 import (
 	"encoding/json"
@@ -28,8 +28,8 @@ type ErrorHandle struct {
 func HttpErrorResponse(w http.ResponseWriter, statusHttpError int, err error) {
 	var (
 		unmarshalTypeError *json.UnmarshalTypeError
-		syntaxError        *json.SyntaxError
-		em                 ErrorHandle
+		syntaxError *json.SyntaxError
+		em          ErrorHandle
 	)
 
 	switch {
