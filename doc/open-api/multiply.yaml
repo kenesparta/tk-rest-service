@@ -67,6 +67,6 @@ components:
     Result:
       type: object
       properties:
-        result:
+        product:
           type: number
           format: float64

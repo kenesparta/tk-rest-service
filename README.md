@@ -51,7 +51,7 @@ docker pull ghcr.io/kenesparta/tk_rest_service:latest
 docker run --rm -d -p 8084:8084 --name rest_service ghcr.io/kenesparta/tk_rest_service
 ```
 
-# 5. Import the API
+# 5. Import the API (easy way)
 
 - You should import the API using JSON postman collection in the `doc/postman` directory.
 - Yu also view the documentation using the **OpenAPI** specification by coping the content from the
