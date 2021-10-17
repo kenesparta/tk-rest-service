@@ -39,7 +39,7 @@ cd ./src/ ; go test -coverprofile=coverage.out ./... ; go tool cover -html=cover
 
 # 4. Pulling from Github Docker registry
 
-1.Pullt he image from
+1.Pull the image from
 
 ```shell
 docker pull ghcr.io/kenesparta/tk_rest_service:latest
@@ -59,7 +59,7 @@ docker run --rm -d -p 8084:8084 --name rest_service ghcr.io/kenesparta/tk_rest_s
 
 # 6. Test the API
 
-You shoud send a POST request to `lcoalhost:8084/v1/multiply` with the JSON payload:
+You shoud send a POST request to `http://localhost:8084/v1/multiply` with the JSON payload:
 ```shell
 {
   "first_number": 0,
