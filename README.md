@@ -56,3 +56,13 @@ docker run --rm -d -p 8084:8084 --name rest_service ghcr.io/kenesparta/tk_rest_s
 - You should import the API using JSON postman collection in the `doc/postman` directory.
 - Yu also view the documentation using the **OpenAPI** specification by coping the content from the
   file `doc/open-api/multiply.yaml` and paste it on the site `https://editor.swagger.io/`
+
+# 6. Test the API
+
+You shoud send a POST request to `lcoalhost:8084/v1/multiply` with the JSON payload:
+```shell
+{
+  "first_number": 0,
+  "second_number": 0
+}
+```

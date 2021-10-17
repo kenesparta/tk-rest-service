@@ -202,3 +202,28 @@ func TestMultiplyHandler_Post_ReturnProductResponse(t *testing.T) {
 		t.Errorf("Calculation error")
 	}
 }
+
+func TestMultiplyHandler_Post_ReturnInfiniteProduct(t *testing.T) {
+	var (
+		jsonStr = []byte(`{"first_factor":-2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222.12, "second_factor":-1522222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222.5}`)
+		mh      MultiplyHandler
+		eh      common.ErrorHandle
+	)
+
+	req, err := http.NewRequest("POST", "/multiply", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Add("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(mh.Post)
+	handler.ServeHTTP(rr, req)
+
+	if err := json.NewDecoder(rr.Body).Decode(&eh); err != nil {
+		t.Fatal(err)
+	}
+
+	if "infinite product" != eh.Message && eh.Code == common.GenericError {
+		t.Errorf("Type error doesn't match")
+	}
+}

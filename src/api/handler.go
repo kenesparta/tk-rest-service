@@ -3,8 +3,8 @@ package api
 import (
 	"encoding/json"
 	"errors"
-	"github.com/kenesparta/tkRestService/common"
 	"github.com/kenesparta/multiplyLogic"
+	"github.com/kenesparta/tkRestService/common"
 	"net/http"
 )
 
