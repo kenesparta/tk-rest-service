@@ -25,7 +25,3 @@ func ValidateHeaders(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-
-//func SetVersion(w http.ResponseWriter, version string) {
-//	w.Header().Set("Accepts-version", version)
-//}

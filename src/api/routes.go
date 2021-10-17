@@ -6,5 +6,5 @@ import (
 
 func InitRoutes(r *mux.Router) {
 	mh := new(MultiplyHandler)
-	r.HandleFunc("/multiply", mh.Post).Methods("POST")
+	r.HandleFunc("/v1/multiply", mh.Post).Methods("POST")
 }

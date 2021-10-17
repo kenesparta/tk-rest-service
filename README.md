@@ -1,4 +1,5 @@
 # REST service
+
 Rest Service for the Multiply Logic ([learn more](https://github.com/kenesparta/multiplyLogic))
 
 # 1. Requirements
@@ -8,7 +9,7 @@ Rest Service for the Multiply Logic ([learn more](https://github.com/kenesparta/
 | 🐳 Docker         | 20.10.9 | Required                     |
 | 🐙 Docker Compose | 1.29.2  | Required                     |
 | 🐃 GNU Make       | 4.2.1   | Optional                     |
-
+| ‍🚀 Postman        | 9.0.7   | Optional                     |
 
 # 2. Execute the service
 
@@ -31,6 +32,27 @@ docker-compose up --detach --remove-orphans --force-recreate
 
 - Execute the command `make l/tco` or `make l/tch` (to get HTML report).
 - If you want HTML report execute the command:
+
 ```shell
 cd ./src/ ; go test -coverprofile=coverage.out ./... ; go tool cover -html=coverage.out ; rm coverage.out
 ```
+
+# 4. Pulling from Github Docker registry
+
+1.Pullt he image from
+
+```shell
+docker pull ghcr.io/kenesparta/tk_rest_service:latest
+```
+
+2. Run the container with the image
+
+```shell
+docker run --rm -d -p 8084:8084 --name rest_service ghcr.io/kenesparta/tk_rest_service
+```
+
+# 5. Import the API
+
+- You should import the API using JSON postman collection in the `doc/postman` directory.
+- Yu also view the documentation using the **OpenAPI** specification by coping the content from the
+  file `doc/open-api/multiply.yaml` and paste it on the site `https://editor.swagger.io/`

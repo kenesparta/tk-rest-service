@@ -1,0 +1,72 @@
+openapi: 3.0.1
+info:
+  title: Multiply Service
+  description: 'Multiplies two numbers an get a product'
+  contact:
+    email: kenesparta@pm.me
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://localhost:8084
+
+tags:
+  - name: multiply
+    description: MUltiply two numbers
+    externalDocs:
+      description: Find out more
+      url: https://localhost:8084
+
+paths:
+  /multiply:
+    post:
+      tags:
+        - product
+      summary: Get a product of two numbers
+      operationId: getProduct
+      requestBody:
+        description: Put two numbers to get their product
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        400:
+          description: Invalid ID supplied
+          content: { }
+        404:
+          description: Pet not found
+          content: { }
+        405:
+          description: Validation exception
+          content: { }
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        first_number:
+          type: number
+          format: float64
+        second_number:
+          type: number
+          format: float64
+
+    Result:
+      type: object
+      properties:
+        result:
+          type: number
+          format: float64
