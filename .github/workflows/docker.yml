@@ -24,7 +24,8 @@ jobs:
           rm $DOCKER_FILENAME
       - name: docker build
         run: |
-          docker build -t ghcr.io/kenesparta/tk_rest_service:$RELEASE_VERSION .
+          ID=$(docker build -q -t ghcr.io/kenesparta/tk_rest_service:latest .)
+          docker tag $ID ghcr.io/kenesparta/tk_rest_service:$RELEASE_VERSION
           docker push ghcr.io/kenesparta/tk_rest_service:$RELEASE_VERSION
           docker push ghcr.io/kenesparta/tk_rest_service:latest
           docker logout
