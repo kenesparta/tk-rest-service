@@ -8,10 +8,11 @@ import (
 	"net/http"
 )
 
-const addr = ":8084"
+const port = ":8084"
 
 type App struct {
 	router  *mux.Router
+	port    string
 	config  string
 	headers handlers.CORSOption
 	methods handlers.CORSOption
@@ -19,7 +20,7 @@ type App struct {
 }
 
 func (a *App) Initialize() {
-	// a.config = configuration.ReadConfiguration("config.toml")
+	a.port = port
 	a.router = mux.NewRouter()
 	api.InitRoutes(a.router)
 }
@@ -27,7 +28,7 @@ func (a *App) Initialize() {
 func (a *App) Run() {
 	a.setCORS()
 	if err := http.ListenAndServe(
-		addr,
+		a.port,
 		handlers.CORS(
 			a.origins,
 			a.headers,

@@ -24,10 +24,8 @@ github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB7
 github.com/gregjones/httpcache v0.0.0-20170920190843-316c5e0ff04e/go.mod h1:FecbI9+v66THATjSRHfNgh1IVFe/9kFxbXtjV0ctIMA=
 github.com/hashicorp/hcl v0.0.0-20170914154624-68e816d1c783/go.mod h1:oZtUIOe8dh44I2q6ScRibXws4Ajl+d+nod3AaR9vL5w=
 github.com/inconshreveable/log15 v0.0.0-20170622235902-74a0988b5f80/go.mod h1:cOaXtrgN4ScfRrD9Bre7U1thNq5RtJ8ZoP4iXVGRj6o=
-github.com/kenesparta/multiplyLogic v0.0.2 h1:ZV7EYGzFQ/963Cc2MpB7Klshyunlrg0jALp+yY2hACc=
-github.com/kenesparta/multiplyLogic v0.0.2/go.mod h1:E/c81jSWKWm7j2u6A70rfLMvn8/pZpZuKz+fWE2Vdkw=
-github.com/kenesparta/multiplyLogic v0.1.0 h1:DMKyi/cDYkzROzsGS1qqpqtB6q2hWt5xmy9582J7s+U=
-github.com/kenesparta/multiplyLogic v0.1.0/go.mod h1:E/c81jSWKWm7j2u6A70rfLMvn8/pZpZuKz+fWE2Vdkw=
+github.com/kenesparta/multiplyLogic v0.3.0 h1:jILVaklnrO99LPTcpOvLCBKjcxJXSu4ClFR9BgX60dY=
+github.com/kenesparta/multiplyLogic v0.3.0/go.mod h1:E/c81jSWKWm7j2u6A70rfLMvn8/pZpZuKz+fWE2Vdkw=
 github.com/kr/pretty v0.2.0/go.mod h1:ipq/a2n7PKx3OHsz4KJII5eveXtPO4qwEXGdVfWzfnI=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=

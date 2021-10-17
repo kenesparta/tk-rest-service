@@ -1,38 +1,40 @@
 package api
 
-// MultiplyHandler Allows to handle all the REST requests
 import (
 	"encoding/json"
 	"errors"
 	"github.com/kenesparta/tkRestService/common"
+	"github.com/kenesparta/multiplyLogic"
 	"net/http"
 )
 
-type MultiplyHandler struct {
-}
+// MultiplyHandler Allows to handle all the REST requests
+type MultiplyHandler struct{}
 
 func (mh *MultiplyHandler) Post(w http.ResponseWriter, r *http.Request) {
-	common.CommonHeaders(w)
+	common.Headers(w)
 	common.ValidateHeaders(w, r)
 	var (
-		multiply Factor
+		multiply multiplyLogic.Factor
 		dec      = json.NewDecoder(r.Body)
 	)
 
 	dec.DisallowUnknownFields()
 	if err := dec.Decode(&multiply); err != nil {
-		common.HttpErrorResponse(w, http.StatusBadRequest, err)
+		common.HttpErrorResponse(w, err)
 		return
 	}
 
 	if !multiply.AreValidNumbers() {
-		common.HttpErrorResponse(w, http.StatusBadRequest, errors.New("fields required"))
+		common.HttpErrorResponse(w, errors.New("fields required"))
+		return
+	}
+
+	if multiply.IsProductInfinite() {
+		common.HttpErrorResponse(w, errors.New("infinite product"))
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(&ProductResponse{Result: multiply.Product()}); err != nil {
-		common.HttpErrorResponse(w, http.StatusInternalServerError, err)
-		return
-	}
+	_ = json.NewEncoder(w).Encode(&ProductResponse{Product: multiply.Product()})
 }

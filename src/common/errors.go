@@ -12,7 +12,7 @@ import (
 
 const (
 	GenericError = iota
-	SyntaxError
+	JSONSyntaxError
 	UnexpectedEOFError
 	UnmarshalTypeError
 	UnknownFieldError
@@ -25,28 +25,33 @@ type ErrorHandle struct {
 	Message string `json:"error_message"`
 }
 
-func HttpErrorResponse(w http.ResponseWriter, statusHttpError int, err error) {
+func HttpErrorResponse(w http.ResponseWriter, err error) {
 	var (
 		unmarshalTypeError *json.UnmarshalTypeError
-		syntaxError *json.SyntaxError
-		em          ErrorHandle
+		syntaxError        *json.SyntaxError
+		eh                 ErrorHandle
 	)
 
 	switch {
+	case err.Error() == "http: request body too large":
+		w.WriteHeader(http.StatusRequestEntityTooLarge)
+		eh.Code = BodyTooLargeError
+		eh.Message = "Request body must not be larger than 1MB"
+
 	case errors.As(err, &syntaxError):
 		w.WriteHeader(http.StatusBadRequest)
-		em.Code = SyntaxError
-		em.Message = fmt.Sprintf("Request body contains badly-formed JSON (at position %d)", syntaxError.Offset)
+		eh.Code = JSONSyntaxError
+		eh.Message = fmt.Sprintf("Request body contains badly-formed JSON (at position %d)", syntaxError.Offset)
 
 	case errors.Is(err, io.ErrUnexpectedEOF):
 		w.WriteHeader(http.StatusBadRequest)
-		em.Code = UnexpectedEOFError
-		em.Message = fmt.Sprintf("Request body contains badly-formed JSON")
+		eh.Code = UnexpectedEOFError
+		eh.Message = fmt.Sprintf("Request body contains badly-formed JSON")
 
 	case errors.As(err, &unmarshalTypeError):
 		w.WriteHeader(http.StatusBadRequest)
-		em.Code = UnmarshalTypeError
-		em.Message = fmt.Sprintf(
+		eh.Code = UnmarshalTypeError
+		eh.Message = fmt.Sprintf(
 			"Request body contains an invalid value for the %q field (at position %d)",
 			unmarshalTypeError.Field,
 			unmarshalTypeError.Offset,
@@ -54,28 +59,23 @@ func HttpErrorResponse(w http.ResponseWriter, statusHttpError int, err error) {
 
 	case strings.HasPrefix(err.Error(), "json: unknown field "):
 		w.WriteHeader(http.StatusBadRequest)
-		em.Code = UnknownFieldError
-		em.Message = fmt.Sprintf(
+		eh.Code = UnknownFieldError
+		eh.Message = fmt.Sprintf(
 			"Request body contains unknown field %s",
 			strings.TrimPrefix(err.Error(), "json: unknown field "),
 		)
 
 	case errors.Is(err, io.EOF):
 		w.WriteHeader(http.StatusBadRequest)
-		em.Code = BodyEmptyError
-		em.Message = "Request body must not be empty"
-
-	case err.Error() == "http: request body too large":
-		w.WriteHeader(http.StatusRequestEntityTooLarge)
-		em.Code = BodyTooLargeError
-		em.Message = "Request body must not be larger than 1MB"
+		eh.Code = BodyEmptyError
+		eh.Message = "Request body must not be empty"
 
 	default:
 		w.WriteHeader(http.StatusBadRequest)
-		em.Code = GenericError
-		em.Message = err.Error()
+		eh.Code = GenericError
+		eh.Message = err.Error()
 	}
-	log.Println(em.Message)
-	_ = json.NewEncoder(w).Encode(&em)
+	log.Println(eh.Message)
+	_ = json.NewEncoder(w).Encode(&eh)
 	return
 }

@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func CommonHeaders(w http.ResponseWriter) {
+func Headers(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Header().Set("X-XSS-Protection", "1; mode=block")
 	w.Header().Set("X-Frame-Options", "SAMEORIGIN")
@@ -26,6 +26,6 @@ func ValidateHeaders(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func SetVersion(w http.ResponseWriter, version string) {
-	w.Header().Set("Accepts-version", version)
-}
+//func SetVersion(w http.ResponseWriter, version string) {
+//	w.Header().Set("Accepts-version", version)
+//}

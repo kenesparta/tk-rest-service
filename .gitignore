@@ -1,2 +1,4 @@
 .idea
-./src/tkRestService
+**/src/tkRestService
+**/src/*.out
+**/src/*.cov
