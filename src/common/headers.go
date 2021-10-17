@@ -1,6 +1,7 @@
 package common
 
 import (
+	"errors"
 	"github.com/golang/gddo/httputil/header"
 	"net/http"
 )
@@ -14,14 +15,13 @@ func Headers(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 }
 
-func ValidateHeaders(w http.ResponseWriter, r *http.Request) {
+func ValidateHeaders(r *http.Request) error {
 	if r.Header.Get("Content-Type") == "" {
-		http.Error(w, "Content-Type header is required", http.StatusUnsupportedMediaType)
-		return
+		return errors.New("Content-Type header is required")
 	}
 	value, _ := header.ParseValueAndParams(r.Header, "Content-Type")
 	if value != "application/json" {
-		http.Error(w, "Content-Type header is not application/json", http.StatusUnsupportedMediaType)
-		return
+		return errors.New("Content-Type header is not application/json")
 	}
+	return nil
 }

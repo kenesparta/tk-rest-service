@@ -13,7 +13,10 @@ type MultiplyHandler struct{}
 
 func (mh *MultiplyHandler) Post(w http.ResponseWriter, r *http.Request) {
 	common.Headers(w)
-	common.ValidateHeaders(w, r)
+	if err := common.ValidateHeaders(r); err != nil {
+		common.HttpErrorResponse(w, err)
+		return
+	}
 	var (
 		multiply multiplyLogic.Factor
 		dec      = json.NewDecoder(r.Body)
